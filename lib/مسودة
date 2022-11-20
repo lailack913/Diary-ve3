@@ -1,0 +1,19 @@
+  Future proprtyImg_selector() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result==null) return print("file is null");
+    setState(() {
+      proprtyImg = result.files.first;
+      print("the file path $proprtyImg");
+    });
+  }
+  Future proprtyImg_uploader() async {
+    final path = 'Diary/${proprtyImg!.name}';
+    final file = File(proprtyImg!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    setState(() {
+      uploadTask =  ref.putFile(file);
+
+    });
+
+
